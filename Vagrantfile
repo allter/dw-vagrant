@@ -6,13 +6,34 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial32"
+#  config.vm.box = "ubuntu/trusty32"
+#  config.vm.box = "ubuntu/trusty64"
+
+	# for ubuntu/xenial32
+	config.vm.provider :virtualbox do |vb|
+		vb.cpus = 1
+		#vb.customize ["modifyvm", :id, "--hwvirtex", "off"]
+			#vb.customize ["modifyvm", :id, "--ioapic", "off"]
+	end
+
 
   config.vm.hostname = HOST_NAME
 
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define HOST_NAME do |host|
   end
+
+=begin
+
+	config.vm.provider "virtualbox" do |vb|
+		vb.memory = "1024"
+		vb.cpus = "2"
+	end
+
+=end
+
+=begin
 
   # Override if Parallels
   config.vm.provider "parallels" do |v, override|
@@ -28,6 +49,8 @@ Vagrant.configure(2) do |config|
     vm.memory = 1024
     vm.cpus = 2
   end
+
+=end
 
   config.vm.provision :shell,
     :keep_color => true,
