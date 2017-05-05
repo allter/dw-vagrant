@@ -54,22 +54,22 @@
       - git branch -u dreamwidth/develop develop
       - git pull
 
-- name: Clone dw-nonfree from user's fork
-  become: yes
-  become_user: dw
-  git: repo=https://{{ gh_user }}@github.com/{{ gh_user }}/dw-nonfree.git dest={{ lj_home }}/ext/dw-nonfree update=no
-  register: dwnonfreegit_result
-
-- name: Set up dreamwidth as remote for dw-nonfree
-  when: dwnonfreegit_result.changed
-  become: yes
-  become_user: dw
-  command: chdir={{ lj_home }}/ext/dw-nonfree {{ item }}
-  with_items:
-      - git remote add dreamwidth https://github.com/dreamwidth/dw-nonfree
-      - git fetch dreamwidth
-      - git branch -u dreamwidth/develop develop
-      - git pull
+#- name: Clone dw-nonfree from user's fork
+#  become: yes
+#  become_user: dw
+#  git: repo=https://{{ gh_user }}@github.com/{{ gh_user }}/dw-nonfree.git dest={{ lj_home }}/ext/dw-nonfree update=no
+#  register: dwnonfreegit_result
+#
+#- name: Set up dreamwidth as remote for dw-nonfree
+#  when: dwnonfreegit_result.changed
+#  become: yes
+#  become_user: dw
+#  command: chdir={{ lj_home }}/ext/dw-nonfree {{ item }}
+#  with_items:
+#      - git remote add dreamwidth https://github.com/dreamwidth/dw-nonfree
+#      - git fetch dreamwidth
+#      - git branch -u dreamwidth/develop develop
+#      - git pull
 
 - name: Create DW MySQL database
   mysql_db: name=dw
