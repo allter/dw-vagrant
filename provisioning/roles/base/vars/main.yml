@@ -69,6 +69,7 @@ dw_packages:
   - cpanminus
   - python-pip
   - python-mysqldb
+  - libdigest-sha-perl
 
 dw_cpan:
   - GTop
@@ -76,7 +77,7 @@ dw_cpan:
   - Unicode::CheckUTF8
   - MogileFS::Client
   - TheSchwartz::Worker::SendEmail
-  - Digest::SHA256
+  #- Digest::SHA256
   - Text::Markdown
   - Image::ExifTool
   - Net::OAuth
