@@ -13,7 +13,7 @@
 #pip -q install git+git://github.com/ansible/ansible.git@v2.0.0-0.5.beta3
 
 echo "Installing ansible"
-apt-get -qq install ansible
+apt-get -qq install ansible aptitude
 
 echo "Provisioning using ansible"
 cd /vagrant/provisioning
