@@ -1,7 +1,8 @@
 ---
 dw_packages:
   - git-core
-  - apache2-mpm-prefork
+  #- apache2-mpm-prefork
+  - apache2
   - libapache2-mod-perl2
   - libapache2-mod-apreq2
   - libapache2-request-perl
