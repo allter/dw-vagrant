@@ -70,6 +70,8 @@ dw_packages:
   - python-pip
   - python-mysqldb
   - libdigest-sha-perl
+  - liblog-log4perl-perl
+  - libdbd-mysql-perl
 
 dw_cpan:
   - GTop
