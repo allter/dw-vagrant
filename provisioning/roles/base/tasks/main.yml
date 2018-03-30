@@ -71,19 +71,35 @@
 #      - git branch -u dreamwidth/develop develop
 #      - git pull
 
+- name: No strict dates in MySQL
+  copy: src=dw_sql_mode.cnf dest=/etc/mysql/mysql.conf.d
+
+- name: Restart service MySQL, in all cases
+  service:
+    name: mysql
+    state: restarted
+  become: yes
+
 - name: Create DW MySQL database
   mysql_db: name=dw
   register: db_result
+  tags:
+    - provision_db
 
 - name: Create Schwartz MySQL database
   mysql_db: name=dw_schwartz
   notify: Provision Schwartz database
   register: schwartz_result
+  tags:
+    - debug
+    - provision_db
 
 - name: Create DW MySQL user
   mysql_user: name=dw priv=dw.*:ALL/dw_schwartz.*:ALL password={{ mysql_password }}
   become: yes
   become_user: root
+  tags:
+    - debug
 
 - name: Create config directory
   file: path={{ lj_home }}/ext/local/etc state=directory
@@ -107,11 +123,15 @@
     - "-r --innodb" # This runs twice
     - "-r --cluster=all --innodb"
     - "-p"
+  tags:
+    - provision_db
 
 - name: Provision Schwartz database
   become: yes
   when: schwartz_result.changed
   mysql_db: name=dw_schwartz state=import target=/usr/share/doc/libtheschwartz-perl/schema.sql
+  tags:
+    - provision_db
 
 - name: Set system password
   become: yes
@@ -122,6 +142,8 @@
     command: bin/upgrading/make_system.pl
     responses:
       account: "{{ system_password }}"
+  tags:
+    - provision_db
 
 - name: Load translation strings
   become: yes
@@ -133,10 +155,10 @@
   become_user: dw
   command: chdir={{ lj_home }} compass compile
 
-- name: Compile stylesheets for dw-nonfree
-  become: yes
-  become_user: dw
-  command: chdir={{ lj_home }}/ext/dw-nonfree compass compile
+#- name: Compile stylesheets for dw-nonfree
+#  become: yes
+#  become_user: dw
+#  command: chdir={{ lj_home }}/ext/dw-nonfree compass compile
 
 - name: Disable default site
   become: yes
