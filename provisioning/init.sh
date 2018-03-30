@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#echo "Updating apt repository"
-#apt-get -qq update
+echo "Updating apt repository"
+apt-get -qq update
 
 #echo "Installing prerequisite packages"
 #apt-get -qq install git python-dev python-pip \
