@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+use YAML qw();
+
+warn "here";
+my $config = YAML::LoadFile( './user_vars.yml' );
+my $mysql_password = $config->{mysql_password}; $mysql_password =~ /^\w+$/ or die "Bad mysql_password";
+my $cmd = "mysql --user=dw --password=$mysql_password --host=127.0.0.1";
+warn "cmd: $cmd";
+exec $cmd;
