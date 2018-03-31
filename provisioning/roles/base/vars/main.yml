@@ -89,6 +89,8 @@ dw_cpan:
   - XMLRPC::Lite
   - Locale::Country
   - IP::Country::Fast
+  - Paws
+  - Text::Fuzzy
 
 dw_pip:
   - pexpect
