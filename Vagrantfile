@@ -17,6 +17,8 @@ Vagrant.configure(2) do |config|
 			#vb.customize ["modifyvm", :id, "--ioapic", "off"]
 	end
 
+#config.vm.boot_timeout = 1200
+
 
   config.vm.hostname = HOST_NAME
 
