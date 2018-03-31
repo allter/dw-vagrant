@@ -4,18 +4,22 @@
 HOST_NAME = "dreamwidth-dev"
 Vagrant.configure(2) do |config|
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial32"
-#  config.vm.box = "ubuntu/trusty32"
-#  config.vm.box = "ubuntu/trusty64"
-
-	# for ubuntu/xenial32
-	config.vm.provider :virtualbox do |vb|
+  config.vm.provider :virtualbox do |vb, override|
+	  # Every Vagrant development environment requires a box. You can search for
+	  # boxes at https://atlas.hashicorp.com/search.
+    override.vm.box = "ubuntu/xenial32"
+	#  config.vm.box = "ubuntu/trusty32"
+	#  config.vm.box = "ubuntu/trusty64"
 		vb.cpus = 1
 		#vb.customize ["modifyvm", :id, "--hwvirtex", "off"]
 			#vb.customize ["modifyvm", :id, "--ioapic", "off"]
 	end
+  config.vm.provider "docker" do |d|
+    #d.image = "phusion/baseimage"
+    #d.image = "ubuntu"
+    d.build_dir = "."
+    d.has_ssh = true
+  end
 
 #config.vm.boot_timeout = 1200
 
@@ -25,34 +29,6 @@ Vagrant.configure(2) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.define HOST_NAME do |host|
   end
-
-=begin
-
-	config.vm.provider "virtualbox" do |vb|
-		vb.memory = "1024"
-		vb.cpus = "2"
-	end
-
-=end
-
-=begin
-
-  # Override if Parallels
-  config.vm.provider "parallels" do |v, override|
-    override.vm.box = "parallels/ubuntu-14.04"
-    override.vm.box_url = "https://vagrantcloud.com/parallels/ubuntu-14.04"
-  end
-
-  # Parallels-specific configuration
-  config.vm.provider :parallels do |vm|
-    vm.name = HOST_NAME
-    # Auto-update Parallels Tools on the VM (takes a few minutes)
-    vm.update_guest_tools = true
-    vm.memory = 1024
-    vm.cpus = 2
-  end
-
-=end
 
   config.vm.provision :shell,
     :keep_color => true,
